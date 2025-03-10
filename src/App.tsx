@@ -154,7 +154,7 @@ function App() {
             {[
               {
                 title: "Senior Engineering Team",
-                description: "100+ years of combined experience in software development and architecture.",
+                description: "100+ years of combined experience in Technical Leadership, Software Development and Architecture.",
                 icon: Users
               },
               {
