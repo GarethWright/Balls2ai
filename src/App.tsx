@@ -1,16 +1,21 @@
 import React from 'react';
+import { Routes, Route, useLocation, Link } from 'react-router-dom';
 import { 
   Brain, 
   Code2, 
   Cpu, 
-  MessageSquare, 
   Shield, 
   Users,
   ChevronRight,
   CheckCircle,
   Globe,
-  ArrowRight
+  ArrowRight,
+  BookOpen,
+  Calendar,
+  User
 } from 'lucide-react';
+import { BlogList } from './components/BlogList';
+import { BlogPost } from './components/BlogPost';
 
 function ServiceCard({ icon: Icon, title, description }: { icon: React.ElementType, title: string, description: string }) {
   return (
@@ -23,6 +28,9 @@ function ServiceCard({ icon: Icon, title, description }: { icon: React.ElementTy
 }
 
 function App() {
+  const location = useLocation();
+  const isBlogPost = location.pathname.startsWith('/blog/');
+
   return (
     <div className="min-h-screen bg-white">
       {/* Navigation */}
@@ -36,6 +44,7 @@ function App() {
             <div className="hidden md:flex items-center space-x-8">
               <a href="#services" className="text-gray-600 hover:text-gray-900 transition">Services</a>
               <a href="#expertise" className="text-gray-600 hover:text-gray-900 transition">Expertise</a>
+              <Link to="/blog" className="text-gray-600 hover:text-gray-900 transition">Blog</Link>
               <a href="#contact" className="bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700 transition">
                 Contact Us
               </a>
@@ -178,7 +187,29 @@ function App() {
         </div>
       </section>
 
+      {/* Blog Section */}
+      <Routes>
+        <Route
+          path="/blog"
+          element={
+            <section className="py-20 bg-gray-50" id="blog">
+              <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div className="text-center mb-16">
+                  <h2 className="text-3xl font-bold text-gray-900 mb-4">Latest Insights</h2>
+                  <p className="text-gray-600 max-w-2xl mx-auto">
+                    Explore our latest thoughts on software engineering, AI integration, and industry best practices.
+                  </p>
+                </div>
+                <BlogList />
+              </div>
+            </section>
+          }
+        />
+        <Route path="/blog/:title" element={<BlogPost />} />
+      </Routes>
+
       {/* Contact Section */}
+      {!isBlogPost && (
       <section className="py-20 bg-indigo-600" id="contact">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center">
@@ -196,6 +227,7 @@ function App() {
           </div>
         </div>
       </section>
+      )}
 
       {/* Footer */}
       <footer className="bg-gray-900 text-gray-400 py-12">
@@ -208,6 +240,7 @@ function App() {
             <div className="flex space-x-6">
               <a href="#services" className="hover:text-white transition">Services</a>
               <a href="#expertise" className="hover:text-white transition">Expertise</a>
+              <a href="#blog" className="hover:text-white transition">Blog</a>
               <a href="#contact" className="hover:text-white transition">Contact</a>
             </div>
           </div>
