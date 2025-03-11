@@ -1,13 +1,11 @@
 import { useParams, Link } from 'react-router-dom';
 import { ArrowLeft, Calendar, User } from 'lucide-react';
-import { blogPosts } from '../blog-posts';
+import { getAllPosts } from '../lib/blog';
 import ReactMarkdown from 'react-markdown';
 
 export function BlogPost() {
-  const { title } = useParams();
-  const post = blogPosts.find(p => 
-    p.title.replace(/[^a-zA-Z0-9-\s]/g, '').replace(/\s+/g, '-') === title
-  );
+  const { slug } = useParams();
+  const post = getAllPosts().find(p => p.slug === slug);
 
   if (!post) {
     return (
@@ -21,7 +19,7 @@ export function BlogPost() {
   }
 
   return (
-    <article className="max-w-3xl mx-auto px-4 py-8">
+    <article className="max-w-3xl mx-auto px-4 py-8 bg-white">
       <Link 
         to="/blog"
         className="inline-flex items-center text-indigo-600 hover:text-indigo-700 mb-8"

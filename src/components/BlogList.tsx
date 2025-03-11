@@ -1,11 +1,14 @@
 import { Link } from 'react-router-dom';
 import { Calendar, User, ArrowRight } from 'lucide-react';
-import { blogPosts } from '../blog-posts';
+import { getAllPosts } from '../lib/blog';
 
-export function BlogList() {
+export function BlogList({ limit }: { limit?: number }) {
+  const posts = getAllPosts();
+  const displayPosts = limit ? posts.slice(0, limit) : posts;
+
   return (
     <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-      {blogPosts.map((post, index) => (
+      {displayPosts.map((post, index) => (
         <article key={index} className="bg-white rounded-xl shadow-sm overflow-hidden hover:shadow-md transition">
           <img
             src={post.heroImage}
@@ -25,7 +28,7 @@ export function BlogList() {
             <div className="flex items-center justify-between">
               <span className="text-sm text-indigo-600 font-medium">AI & Technology</span>
               <Link 
-                to={`/blog/${post.title.replace(/[^a-zA-Z0-9-\s]/g, '').replace(/\s+/g, '-')}`}
+                to={`/blog/${post.slug}`}
                 className="inline-flex items-center text-indigo-600 hover:text-indigo-700 transition"
               >
                 Read More

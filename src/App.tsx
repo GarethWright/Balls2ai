@@ -200,13 +200,37 @@ function App() {
                     Explore our latest thoughts on software engineering, AI integration, and industry best practices.
                   </p>
                 </div>
-                <BlogList />
+                <BlogList limit={6} />
               </div>
             </section>
           }
         />
-        <Route path="/blog/:title" element={<BlogPost />} />
+        <Route path="/blog/:slug" element={<BlogPost />} />
       </Routes>
+      
+      {/* Latest Blog Posts on Homepage */}
+      {location.pathname === '/' && (
+        <section className="py-20 bg-gray-50">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="text-center mb-16">
+              <h2 className="text-3xl font-bold text-gray-900 mb-4">Latest Insights</h2>
+              <p className="text-gray-600 max-w-2xl mx-auto">
+                Stay updated with our latest thoughts on software engineering and AI.
+              </p>
+            </div>
+            <BlogList limit={3} />
+            <div className="text-center mt-12">
+              <Link
+                to="/blog"
+                className="inline-flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700"
+              >
+                View All Posts
+                <ArrowRight className="ml-2 h-5 w-5" />
+              </Link>
+            </div>
+          </div>
+        </section>
+      )}
 
       {/* Contact Section */}
       {!isBlogPost && (
